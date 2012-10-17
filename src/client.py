@@ -34,3 +34,8 @@ class Client():
         msg = message.Message()
         msg.encode(moves)
         self.conn.send_message(msg)
+
+    def give_up(self, reason=""):
+        msg = message.Message()
+        msg.encode({'giving_up':reason})
+        self.conn.send_message(msg)        

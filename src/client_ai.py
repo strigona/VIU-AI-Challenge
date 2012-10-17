@@ -5,5 +5,10 @@ client.start()
 
 print client.get_game_state()
 while client.running:
-    client.send_moves({'moves':[([0,3], [0,4]), ([7,6],[6,5])]})
+    s = raw_input('q<RET> to quit, any other key for next loop')
+    if s == 'q' or s == 'Q':
+        client.give_up("Client is quitting.")
+    else:
+        client.send_moves({'moves':{1:([0,3], [0,4]), 2:([7,6],[6,5])}})
+
     print client.get_game_state()

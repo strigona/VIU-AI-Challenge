@@ -2,6 +2,7 @@
 '''
 wait for connection from player
 main loop:
+    update display
     send game state to player AI
     wait for moves from player AI
     send game state to cat AI
@@ -10,21 +11,42 @@ main loop:
 import server
 import level
 import cat_ai
-
-SHUTDOWN = False
+from display import *
 
 lvl = level.generateLevel(21, 63)
 server = server.Server()
 cat = cat_ai.CatAI()
 
-server.start()
+D = level.createAdjList(lvl, TERRAIN_FLOOR)
 
-while not SHUTDOWN:
+print "Waiting for client to connect..."
+server.start()
+print "Client connected..."
+print "Initializing display..."
+
+S = initDisplay()
+
+
+while server.running:
+    # Print map
+    printAdjList(S, D, Vertex(0,0), True)
+    
     server.send_state(lvl)
-    server.get_player_moves()
+    if server.get_player_moves():
+        # Process server.moves
+        pass
+    else:
+        # Client error???
+        break
 
     cat.get_cat_moves(lvl)
     
-    SHUTDOWN = True
 
+endDisplay(S)
+print "Closing display..."
+if server.error_msg != "":
+    print server.error_msg
+print "Disconnecting from client..."
 server.end()
+print "Disconnected from client..."
+print "Shutting down..."
