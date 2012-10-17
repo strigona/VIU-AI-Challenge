@@ -172,7 +172,7 @@ def initCurses(h = 24, w = 80):
     screen = curses.initscr()
     T = screen.getmaxyx()
     if T[0] < h or T[1] < w:
-        endCurses()
+        endCurses(screen)
         print 'Terminal h x w less than ' + str(h) + ' x ' + str(w) + '.'
         return None
     curses.noecho()
