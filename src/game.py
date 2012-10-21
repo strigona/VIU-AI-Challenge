@@ -13,11 +13,11 @@ import level
 import cat_ai
 from display import *
 
-lvl = level.generateLevel(21, 63)
+lvl = level.Level(21, 63)
 server = server.Server()
 cat = cat_ai.CatAI()
 
-D = level.createAdjList(lvl, TERRAIN_FLOOR)
+D = lvl.createAdjList(TERRAIN_FLOOR)
 
 print "Waiting for client to connect..."
 server.start()

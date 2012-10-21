@@ -1,5 +1,7 @@
 import socket
-import connection, message
+import level
+import connection
+import message
 
 class Server():
 
@@ -38,7 +40,7 @@ class Server():
 
     def send_state(self, lvl):
         msg = message.Message()
-        msg.encode({'game_status':'running', 'map':lvl})
+        msg.encode({'game_status':'running', 'map':lvl.level_list})
         self.conn.send_message(msg)
 
     '''
